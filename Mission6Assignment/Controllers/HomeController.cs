@@ -26,9 +26,9 @@ namespace Mission6Assignment.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Form(Form form)
+        public IActionResult Form(Movie movie)
         {
-            _context.Form.Add(form);
+            _context.Movies.Add(movie);
             _context.SaveChanges();
 
             return View("Index");
@@ -38,6 +38,12 @@ namespace Mission6Assignment.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult List()
+        {
+            var movies = _context.Movies.ToList();
+            return View(movies);
         }
     }
 }

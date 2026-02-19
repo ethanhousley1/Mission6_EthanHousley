@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<FormContext>(options =>
 {
-    options.UseSqlite("Data Source=MovieDB.sqlite");
+    options.UseSqlite("Data Source=JoelHiltonMovieCollection.sqlite");
 });
 
 var app = builder.Build();
