@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="JoelHiltonMovieCollection %281%29.sqlite" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="JoelHiltonMovieCollection (1).sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>

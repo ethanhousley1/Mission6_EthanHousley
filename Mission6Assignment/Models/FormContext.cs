@@ -16,11 +16,10 @@ public partial class FormContext : DbContext
     }
 
     public virtual DbSet<Category> Categories { get; set; }
-
     public virtual DbSet<Movie> Movies { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("Data Source=JoelHiltonMovieCollection.sqlite");
+        => optionsBuilder.UseSqlite("Data Source=JoelHiltonMovieCollection (1).sqlite");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -11,6 +11,7 @@ namespace Mission6Assignment.Controllers
         {
             _context = context;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -20,18 +21,30 @@ namespace Mission6Assignment.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult Form()
         {
-            return View();
+            ViewBag.Categories = _context.Categories.ToList();
+            return View(new Movie());
         }
+
         [HttpPost]
         public IActionResult Form(Movie movie)
         {
-            _context.Movies.Add(movie);
-            _context.SaveChanges();
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Categories = _context.Categories.ToList();
+                return View(movie);
+            }
 
-            return View("Index");
+            if (movie.MovieId == 0)
+                _context.Movies.Add(movie);
+            else
+                _context.Movies.Update(movie);
+
+            _context.SaveChanges();
+            return RedirectToAction("List");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -42,8 +55,48 @@ namespace Mission6Assignment.Controllers
 
         public IActionResult List()
         {
-            var movies = _context.Movies.ToList();
-            return View(movies);
+            try
+            {
+                if (_context == null)
+                {
+                    return Content("_context is NULL");
+                }
+
+                if (_context.Movies == null)
+                {
+                    return Content("_context.Movies is NULL");
+                }
+
+                var movies = _context.Movies.ToList();
+                return View(movies);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Categories = _context.Categories.ToList();
+            var movie = _context.Movies.Find(id);
+            if (movie == null)
+                return NotFound();
+            return View("Form", movie);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var movie = _context.Movies.Find(id);
+            if (movie == null)
+                return NotFound();
+
+            _context.Movies.Remove(movie);
+            _context.SaveChanges();
+            return RedirectToAction("List");
         }
     }
 }
